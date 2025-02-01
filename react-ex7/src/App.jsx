@@ -8,7 +8,7 @@ function App() {
 
   const StateCnt=()=>{
 
-    let n = stateW?stateW:1;
+    let n = stateW;
 
     return(
       <>
@@ -42,30 +42,27 @@ function App() {
   };
 
   const [state, dispatch] = useReducer((oldState, action)=>{
-
-      let n = (reducerW)? reducerW:1;
-
-      if(action === 'up'){
-        return oldState + n;
-      }else if(action === 'down'){
-        return oldState - n;
-      }else if(action === 'init'){
+      if(action.type === 'up'){
+        return oldState + action.n;
+      }else if(action.type === 'down'){
+        return oldState - action.n;
+      }else if(action.type === 'init'){
         return 0;
       }
 
-  },0)
+  },0);
   const ReducerCnt=()=>{
     return(
       <>
         <div>Reducer Cnt: {state}</div>
         <button onClick={function(){
-          dispatch('up');
+          dispatch( {type:'up', n:reducerW} );
         }}>up</button>
         <button onClick={function(){
-          dispatch('down');
+          dispatch( {type:'down', n:reducerW} );
         }}>down</button>
         <button onClick={function(){
-          dispatch('init');
+          dispatch( {type:'init', n:reducerW} );
         }}>init</button>
         <input type='text' value={reducerW}
           onChange={(e)=>{
